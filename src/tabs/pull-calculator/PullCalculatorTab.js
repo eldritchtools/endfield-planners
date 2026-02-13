@@ -282,7 +282,7 @@ export default function PullCalculatorTab() {
     const workerRef = useRef(null);
     const [isComputing, setIsComputing] = useState(false);
     const [results, setResults] = useState([]);
-    const [hoveredPull, setHoveredPull] = useState(null);
+    const [hoveredPull, setHoveredPull] = useState(0);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [chartCompression, setChartCompression] = useState(1);
     const [showChart, setShowChart] = useState(true);
@@ -399,7 +399,7 @@ export default function PullCalculatorTab() {
             <div style={{width: "0.5rem"}}/>
             <input type="number" min={1} max={params?.maxPulls ?? 1} value={hoveredPull} disabled={isComputing}
                 onChange={e => handleSetNumberInput(e.target.value, setHoveredPull, false)}
-                onBlur={e => handleSetNumberInput(e.target.value, setHoveredPull, true, 1, params?.maxPulls ?? 1)}
+                onBlur={e => handleSetNumberInput(e.target.value, setHoveredPull, true, 0, params?.maxPulls ?? 1)}
                 style={inputStyle}
             />
             <div>Viewed pull</div>
