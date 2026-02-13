@@ -14,7 +14,7 @@ import ProfilesTab from './tabs/profiles/ProfilesTab';
 import { DataProvider, getMeta } from './DataProvider';
 
 const description = <span>
-  Endfield Planners is a free fan-made tool to help players with their gameplay in Arknights: Endfield.
+  Endfield Planners is a free fan-made collection of tools to help players with their gameplay in Arknights: Endfield.
 </span>;
 
 function SidebarLink({ href, className, style, onClick, children }) {
