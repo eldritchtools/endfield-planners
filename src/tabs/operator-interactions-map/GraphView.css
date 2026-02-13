@@ -1,0 +1,37 @@
+.react-flow__controls {
+    background: #1e1e1e;
+    border: 1px solid #333;
+}
+
+.react-flow__controls button {
+    background: #2b2b2b;
+    color: white;
+    border-bottom: 1px solid #333;
+}
+
+.react-flow__controls button:hover {
+    background: #3a3a3a;
+}
+
+/* .react-flow__handle {
+  opacity: 0;
+  pointer-events: none;
+} */
+
+
+.node {
+    --incoming-band: transparent;
+    --outgoing-band: transparent;
+
+    background-image:
+        linear-gradient(to right, var(--incoming-band), transparent 40px),
+        linear-gradient(to left, var(--outgoing-band), transparent 40px);
+}
+
+.node-incoming {
+    --incoming-band: rgba(20, 184, 166, 0.4);
+}
+
+.node-outgoing {
+    --outgoing-band: rgba(245, 158, 11, 0.4);
+}
