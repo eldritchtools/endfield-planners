@@ -18,8 +18,8 @@ function computeRates({ maxPulls, pullsUntil6, pullsUntil5, specificToggle, targ
     const stateSize = p6Max * p5Max * (target6 + 1);
     cancelled = false;
 
-    let currDP = new Float32Array(stateSize).fill(0);
-    let nextDP = new Float32Array(stateSize).fill(0);
+    let currDP = new Float64Array(stateSize).fill(0);
+    let nextDP = new Float64Array(stateSize).fill(0);
 
     function getIndex(p6, p5, k) {
         return ((p6 * p5Max + p5) * (target6 + 1) + k);
@@ -99,20 +99,29 @@ function computeRates({ maxPulls, pullsUntil6, pullsUntil5, specificToggle, targ
             }
 
             // compile probabilities for each k
-            let probK = new Float32Array(target6 + 1).fill(0);
+            let totalProb = 0;
+            let probK = new Float64Array(target6 + 1).fill(0);
             for (let idx = 0; idx < stateSize; idx++) {
                 const probState = nextDP[idx];
+                totalProb += probState;
                 if (probState < 1e-15) continue;
                 let k = idx % (target6 + 1);
                 probK[k] += probState;
             }
 
-            let probAtLeastK = new Float32Array(target6 + 1).fill(0);
+            let probAtLeastK = new Float64Array(target6 + 1).fill(0);
             probAtLeastK[target6] = probK[target6];
             for (let i = target6 - 1; i > 0; i--)
                 probAtLeastK[i] = probK[i] + probAtLeastK[i + 1];
 
             results.push({ pull: currentPull, probAtLeastK: [...probAtLeastK], e6: e6, e5: e5, e4: e4 });
+
+            // normalize probabilities if the drift gets too big
+            if (Math.abs(totalProb - 1) > 1e-12) {
+                for (let i = 0; i < stateSize; i++) {
+                    nextDP[i] /= totalProb;
+                }
+            }
 
             // Swap DP arrays
             [currDP, nextDP] = [nextDP, currDP];

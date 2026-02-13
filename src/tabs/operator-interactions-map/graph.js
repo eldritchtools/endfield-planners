@@ -290,26 +290,43 @@ function processGraph(subgraph, focusIds) {
     const edgeSet = new Set();
     const edges = [];
 
+    const nodesMapped = {};
     subgraph.nodes.forEach(nodeId => {
         if (nodeId.includes("|")) {
             const [opId, type] = nodeId.split("|");
             if (!operators.has(opId)) {
                 operators.add(opId);
-                nodes.push(createOperatorNode(opId));
+                const node = createOperatorNode(opId)
+                nodes.push(node);
+                nodesMapped[opId] = nodes[node];
             }
             nodes.push(createSkillNode(nodeId, opId, type));
         } else {
-            nodes.push(createTriggerNode(nodeId));
+            const node = createTriggerNode(nodeId);
+            nodes.push(node);
+            nodesMapped[nodeId] = node;
         }
     });
-
+    
+    const adjIn = {};
+    const adjOut = {};
     subgraph.edges.forEach(edge => {
         const e = createEdge(edge.source, edge.target);
         if (!edgeSet.has(e.id)) {
             edgeSet.add(e.id);
             edges.push(e);
+            
+            if(!(e.source in adjOut)) adjOut[e.source] = [e.target];
+            else adjOut[e.source].push(e.target);
+            if(!(e.target in adjIn)) adjIn[e.target] = [e.source];
+            else adjOut[e.target].push(e.source);
         }
     });
+
+    if(focusIds.length === 1) {
+        
+    }
+
 
     return { nodes, edges };
 };

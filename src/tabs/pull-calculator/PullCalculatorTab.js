@@ -259,7 +259,7 @@ function ArsenalBannerResults({ currentResult }) {
         <div style={{ display: "grid", gridTemplateColumns: "auto auto", gap: "0.25rem" }}>
             {currentResult.probAtLeastK.map((p, i) => i === 0 ? null : <>
                 <span key={`${i}n`}>≥{i}</span>
-                <span key={`${i}p`}>{p > .999999 ? (100).toFixed(4) : (p * 100).toFixed(4)}%</span>
+                <span key={`${i}p`}>{p > .9999995 ? (100).toFixed(4) : (p * 100).toFixed(4)}%</span>
             </>
             )}
         </div>
@@ -388,7 +388,7 @@ export default function PullCalculatorTab() {
             </button>
         </div>
 
-        <h3>Rates for at least n copies of the featured 6★</h3>
+        <h3>Rates for at least n copies of the target 6★</h3>
         <div style={{ display: "flex", alignItems: "center", gap: "0.2rem", marginBottom: "16px" }}>
             <input type="number" min={1} max={100} value={chartCompression} disabled={isComputing}
                 onChange={e => handleSetNumberInput(e.target.value, setChartCompression, false)}

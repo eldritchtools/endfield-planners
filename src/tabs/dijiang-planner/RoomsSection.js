@@ -55,6 +55,7 @@ function MFGComponents({ roomId }) {
                 }
             }))}
             options={options}
+            emptyComponent={"Select Product"}
         />
         {profileData.dijiangPlanner.roomSettings[roomId]?.item ?
             <div style={{ textAlign: "start", maxWidth: "10ch" }}>
