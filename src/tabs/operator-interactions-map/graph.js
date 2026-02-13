@@ -237,6 +237,8 @@ function projectPathGraph(graph, startId, endId) {
 }
 
 function processGraph(subgraph, focusIds) {
+    if(subgraph.nodes.length === 0) return { nodes: [], edges: [] };
+
     const createOperatorNode = (id) =>
     ({
         id,
@@ -298,7 +300,7 @@ function processGraph(subgraph, focusIds) {
                 operators.add(opId);
                 const node = createOperatorNode(opId)
                 nodes.push(node);
-                nodesMapped[opId] = nodes[node];
+                nodesMapped[opId] = node;
             }
             nodes.push(createSkillNode(nodeId, opId, type));
         } else {
@@ -307,7 +309,7 @@ function processGraph(subgraph, focusIds) {
             nodesMapped[nodeId] = node;
         }
     });
-    
+
     const adjIn = {};
     const adjOut = {};
     subgraph.edges.forEach(edge => {
@@ -315,16 +317,49 @@ function processGraph(subgraph, focusIds) {
         if (!edgeSet.has(e.id)) {
             edgeSet.add(e.id);
             edges.push(e);
-            
-            if(!(e.source in adjOut)) adjOut[e.source] = [e.target];
+
+            if (!(e.source in adjOut)) adjOut[e.source] = [e.target];
             else adjOut[e.source].push(e.target);
-            if(!(e.target in adjIn)) adjIn[e.target] = [e.source];
-            else adjOut[e.target].push(e.source);
+            if (!(e.target in adjIn)) adjIn[e.target] = [e.source];
+            else adjIn[e.target].push(e.source);
         }
     });
 
-    if(focusIds.length === 1) {
-        
+    if (focusIds.length === 1 && focusIds[0]) {
+        const expand = [focusIds[0]];
+        while (expand.length > 0) {
+            console.log(nodesMapped, expand[0]);
+            const curNodeX = (expand[0].includes("|") ? nodesMapped[expand[0].split("|")[0]] : nodesMapped[expand[0]]).position.x;
+            adjIn[expand[0]]?.forEach(nodeId => {
+                const node = nodeId.includes("|") ? nodesMapped[nodeId.split("|")[0]] : nodesMapped[nodeId];
+                node.position.x = Math.min(node.position.x, curNodeX - 100);
+                expand.push(nodeId);
+            })
+            expand.shift();
+        }
+        expand.push(focusIds[0]);
+        while (expand.length > 0) {
+            const curNodeX = (expand[0].includes("|") ? nodesMapped[expand[0].split("|")[0]] : nodesMapped[expand[0]]).position.x;
+            adjOut[expand[0]]?.forEach(nodeId => {
+                const node = nodeId.includes("|") ? nodesMapped[nodeId.split("|")[0]] : nodesMapped[nodeId];
+                node.position.x = Math.max(node.position.x, curNodeX + 100);
+                expand.push(nodeId);
+            })
+            expand.shift();
+        }
+    } else if (focusIds.length === 2) {
+        if (focusIds[0]) {
+            const nodeA = (focusIds[0].includes("|") ? nodesMapped[focusIds[0].split("|")[0]] : nodesMapped[focusIds[0]]);
+            nodeA.position.x = -200;
+        }
+        if (focusIds[1]) {
+            const nodeB = (focusIds[1].includes("|") ? nodesMapped[focusIds[1].split("|")[0]] : nodesMapped[focusIds[1]]);
+            nodeB.position.x = 200;
+        }
+    } else if (focusIds.length === 4) {
+        if(focusIds[0]) {
+
+        }
     }
 
 
