@@ -31,10 +31,10 @@ function layout(nodes, edges) {
         }));
 
     const sim = forceSimulation(layoutNodes)
-        .force("charge", forceManyBody().strength(-1000))
+        .force("charge", forceManyBody().strength(-20))
         .force("link", forceLink(edges)
             .id(d => d.id)
-            .distance(200)
+            .distance(100)
             .strength(0.5)
         )
         .force("collision", forceCollide().radius(d =>
@@ -88,6 +88,7 @@ export function GraphView({ graph }) {
         setInConnections(inCons);
         setOutConnections(outCons);
 
+        setSelectedNode(null);
         setGraphChanged(true);
         return { nodes: finalNodes, edges };
     }, [graph]);
@@ -113,11 +114,21 @@ export function GraphView({ graph }) {
             }
         }));
 
+        const edgeStroke = (e) => {
+            if (selectedNode) {
+                if (e.source === selectedNode) return "#22d3ee";
+                if (e.target === selectedNode) return "#f59e0b";
+                return "#555";
+            } else {
+                return "#ddd";
+            }
+        }
+
         const styledEdges = (graphChanged ? subgraph.edges : edges).map(e => ({
             ...e,
             style: {
                 ...e.style,
-                stroke: selectedNode ? (e.source === selectedNode || e.target === selectedNode ? "#4ade80" : "#555") : "#ddd"
+                stroke: edgeStroke(e)
             }
         }))
 

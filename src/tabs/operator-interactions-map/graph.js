@@ -236,8 +236,8 @@ function projectPathGraph(graph, startId, endId) {
 
 }
 
-function processGraph(subgraph, focusIds) {
-    if(subgraph.nodes.length === 0) return { nodes: [], edges: [] };
+function processGraph(subgraph, focusIds, operatorFocus) {
+    if (subgraph.nodes.length === 0) return { nodes: [], edges: [] };
 
     const createOperatorNode = (id) =>
     ({
@@ -325,10 +325,26 @@ function processGraph(subgraph, focusIds) {
         }
     });
 
+    const setPositionIfExists = (id, x, y) => {
+        if (!id) return;
+        const node = (id.includes("|") ? nodesMapped[id.split("|")[0]] : nodesMapped[id]);
+        if (!node) return;
+        node.position.x = x;
+        node.position.y = y;
+    }
+
     if (focusIds.length === 1 && focusIds[0]) {
-        const expand = [focusIds[0]];
+        const expand = [];
+        const done = new Set();
+
+        if (operatorFocus) expand.push(`${focusIds[0]}|skill`, `${focusIds[0]}|combo`, `${focusIds[0]}|ultimate`);
+        else expand.push(focusIds[0]);
         while (expand.length > 0) {
-            console.log(nodesMapped, expand[0]);
+            if (done.has(expand[0])) {
+                expand.shift();
+                continue;
+            }
+            done.add(expand[0]);
             const curNodeX = (expand[0].includes("|") ? nodesMapped[expand[0].split("|")[0]] : nodesMapped[expand[0]]).position.x;
             adjIn[expand[0]]?.forEach(nodeId => {
                 const node = nodeId.includes("|") ? nodesMapped[nodeId.split("|")[0]] : nodesMapped[nodeId];
@@ -337,8 +353,16 @@ function processGraph(subgraph, focusIds) {
             })
             expand.shift();
         }
-        expand.push(focusIds[0]);
+
+        done.clear();
+        if (operatorFocus) expand.push(`${focusIds[0]}|skill`, `${focusIds[0]}|combo`, `${focusIds[0]}|ultimate`);
+        else expand.push(focusIds[0]);
         while (expand.length > 0) {
+            if (done.has(expand[0])) {
+                expand.shift();
+                continue;
+            }
+            done.add(expand[0]);
             const curNodeX = (expand[0].includes("|") ? nodesMapped[expand[0].split("|")[0]] : nodesMapped[expand[0]]).position.x;
             adjOut[expand[0]]?.forEach(nodeId => {
                 const node = nodeId.includes("|") ? nodesMapped[nodeId.split("|")[0]] : nodesMapped[nodeId];
@@ -348,20 +372,14 @@ function processGraph(subgraph, focusIds) {
             expand.shift();
         }
     } else if (focusIds.length === 2) {
-        if (focusIds[0]) {
-            const nodeA = (focusIds[0].includes("|") ? nodesMapped[focusIds[0].split("|")[0]] : nodesMapped[focusIds[0]]);
-            nodeA.position.x = -200;
-        }
-        if (focusIds[1]) {
-            const nodeB = (focusIds[1].includes("|") ? nodesMapped[focusIds[1].split("|")[0]] : nodesMapped[focusIds[1]]);
-            nodeB.position.x = 200;
-        }
+        setPositionIfExists(focusIds[0], -200, 0);
+        setPositionIfExists(focusIds[1], 200, 0);
     } else if (focusIds.length === 4) {
-        if(focusIds[0]) {
-
-        }
+        setPositionIfExists(focusIds[0], -200, -200);
+        setPositionIfExists(focusIds[1], 200, -200);
+        setPositionIfExists(focusIds[2], 200, 200);
+        setPositionIfExists(focusIds[3], -200, 200);
     }
-
 
     return { nodes, edges };
 };
@@ -371,10 +389,10 @@ function projectGraph(graph, viewSpec) {
     switch (viewSpec.mode) {
         case "operator":
             subgraph = projectOperatorGraph(graph, viewSpec.ids[0]);
-            return processGraph(subgraph, viewSpec.ids);
+            return processGraph(subgraph, viewSpec.ids, true);
         case "trigger":
             subgraph = projectTriggerGraph(graph, viewSpec.ids[0]);
-            return processGraph(subgraph, viewSpec.ids);
+            return processGraph(subgraph, viewSpec.ids, false);
         case "team":
             subgraph = projectTeamGraph(graph, viewSpec.ids);
             return processGraph(subgraph, viewSpec.ids);
