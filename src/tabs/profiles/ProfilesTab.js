@@ -189,7 +189,7 @@ function OperatorsPanel() {
     const selectedOperatorStyle = { ...operatorStyle, border: "2px #c4a83c solid", backgroundColor: "#3A2E0A" };
 
     const components = [];
-    components.push(<div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+    components.push(<div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
         Search operator:
         <input value={searchString} onChange={e => setSearchString(e.target.value)} />
         Endministrator Portrait:
@@ -304,7 +304,7 @@ function OperatorsPanel() {
         </div>
     </div>)
 
-    return <div style={{ display: "flex", flexDirection: "column", height: "100%", width: "100%", alignItems: "center", gap: "0.2rem" }}>
+    return <div style={{ display: "flex", flexDirection: "column", width: "100%", alignItems: "center", gap: "0.2rem" }}>
         {components}
     </div>
 }
@@ -312,7 +312,7 @@ function OperatorsPanel() {
 
 function ProfilesTab() {
     return <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-        <div style={{ display: "flex", flexDirection: "column", maxWidth: "1000px", alignItems: "center", gap: "1rem", height: "100vh" }}>
+        <div style={{ display: "flex", flexDirection: "column", maxWidth: "min(1000px, 90vw)", alignItems: "center", gap: "1rem" }}>
             <h2 style={{ marginBottom: "0.5rem" }}>Profiles</h2>
             <p>
                 All personal data is stored locally on your device.
