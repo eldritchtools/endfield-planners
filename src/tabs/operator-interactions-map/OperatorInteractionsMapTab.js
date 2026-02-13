@@ -134,7 +134,7 @@ export default function OperatorInteractionsMapTab() {
         <p style={{ textAlign: "start", maxWidth: "1200px", lineHeight: "1.3" }}>
             Find interactions between operators.
             <br />
-            The positions of the nodes on the graph are automatically computed which is still pretty rough, especially when there's a lot being displayed.
+            The positions of the nodes on the graph are automatically and somewhat randomly computed which is still pretty rough, especially when there's a lot being displayed.
             <br />
             Clicking on a skill or status will highlight all the other nodes connected to it. This should make viewing things easier. You can also move nodes around if you want.
             <br />
