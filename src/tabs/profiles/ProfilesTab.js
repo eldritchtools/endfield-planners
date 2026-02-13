@@ -114,7 +114,7 @@ function ProfilesPanel() {
         <div style={{ display: "flex", width: "50%", height: "5rem", justifyContent: "center", overflowY: "scroll", border: "1px #aaa solid" }}>
             <div style={{ display: "flex", flexDirection: "column", justifyContent: "start", width: "100%", height: "100%" }}>
                 {profiles.map(profile => {
-                    return <div style={selected === profile ? { background: "rgba(255, 255, 255, 0.25)" } : {}} onClick={() => setSelected(profile)}>
+                    return <div key={profile} style={selected === profile ? { background: "rgba(255, 255, 255, 0.25)" } : {}} onClick={() => setSelected(profile)}>
                         {profile}
                     </div>
                 })}
@@ -189,7 +189,7 @@ function OperatorsPanel() {
     const selectedOperatorStyle = { ...operatorStyle, border: "2px #c4a83c solid", backgroundColor: "#3A2E0A" };
 
     const components = [];
-    components.push(<div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+    components.push(<div key={components.length} style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
         Search operator:
         <input value={searchString} onChange={e => setSearchString(e.target.value)} />
         Endministrator Portrait:
@@ -217,6 +217,7 @@ function OperatorsPanel() {
     }).sort((a, b) => a[0].localeCompare(b[0])).map(([opId, _]) => opId), [profileData.operators, searchString, operators, operatorsLoading]);
 
     components.push(<div
+        key={components.length}
         style={{
             display: "flex", flexDirection: "column", width: "100%", height: "400px",
             padding: "0.5rem", borderRadius: "1rem", border: "2px #aaa solid"
@@ -262,7 +263,7 @@ function OperatorsPanel() {
         setAvailableSelected([]);
     }
 
-    components.push(<div style={{ display: "flex", flexDirection: "row", gap: "1rem", flex: "0 0 auto" }}>
+    components.push(<div key={components.length} style={{ display: "flex", flexDirection: "row", gap: "1rem", flex: "0 0 auto" }}>
         <button style={{ fontSize: "1rem" }} onClick={addOperators}>&uarr;</button>
         <button style={{ fontSize: "1rem" }} onClick={removeOperators}>&darr;</button>
     </div>)
@@ -283,6 +284,7 @@ function OperatorsPanel() {
     }).sort((a, b) => a[0].localeCompare(b[0])).map(([opId, _]) => opId), [profileData.operators, searchString, operators, operatorsLoading]);
 
     components.push(<div
+        key={components.length}
         style={{
             display: "flex", flexDirection: "column", width: "100%", height: "400px",
             padding: "0.5rem", borderRadius: "1rem", border: "2px #aaa solid"

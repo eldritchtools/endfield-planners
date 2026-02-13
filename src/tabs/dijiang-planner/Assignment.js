@@ -163,7 +163,7 @@ function optimizeOperators(operatorsData, profileData, available) {
         Object.keys(profileData.dijiangPlanner.roomAssignments).forEach(roomId => {
             if (roomId === "CN") return;
             const score = roomScore[operatorId][roomId] - (0.000001 * roomScore[operatorId]["CN"]);
-            mcmf.addEdge(operatorsMapping[operatorId], roomsMapping[roomId], 1, -score);
+            mcmf.addEdge(operatorsMapping[operatorId], roomsMapping[roomId], 1, 100-score);
         })
     });
 
