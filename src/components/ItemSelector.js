@@ -25,7 +25,7 @@ function ItemTextSelector({ value, setValue, options }) {
     />
 }
 
-function ItemImageSelector({ value, setValue, options, styleOverride }) {
+function ItemImageSelector({ value, setValue, options, styleOverride, emptyComponent = null }) {
     const [filter, setFilter] = useState("");
     const [isOpen, setIsOpen] = useState(false);
     const triggerRef = useRef(null);
@@ -35,7 +35,7 @@ function ItemImageSelector({ value, setValue, options, styleOverride }) {
         return options.filter((opt) =>
             opt.name.toLowerCase().includes(filter.toLowerCase())
         );
-    }, [filter, options]);  
+    }, [filter, options]);
 
     const handleOpenChange = (open) => {
         setIsOpen(open);
@@ -45,7 +45,7 @@ function ItemImageSelector({ value, setValue, options, styleOverride }) {
     return (
         <Select.Root value={value} onValueChange={v => setValue(v)} open={isOpen} onOpenChange={handleOpenChange}>
             <Select.Trigger className="select-trigger" ref={triggerRef} style={{ height: "80px", ...styleOverride }}>
-                {value ? <ItemImage id={value} width={80} height={80} /> : null}
+                {value ? <ItemImage id={value} width={80} height={80} /> : emptyComponent}
             </Select.Trigger>
 
             <Select.Portal>

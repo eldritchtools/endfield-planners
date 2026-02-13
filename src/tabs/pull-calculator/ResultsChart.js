@@ -81,7 +81,7 @@ export default function ResultsChart({ data, lines, setHoveredPull, compression 
                 <XAxis dataKey="pull" stroke="#e5e7eb" tick={{ fill: "#e5e7eb" }} />
                 <YAxis domain={[0, 100]} stroke="#e5e7eb" tick={{ fill: "#e5e7eb" }} tickFormatter={(v) => `${Math.round(v)}%`} />
                 <Tooltip
-                    formatter={(value) => value > 99.9999 ? `${(100).toFixed(5)}%` : `${value.toFixed(5)}%`}
+                    formatter={(value) => value > 99.99995 ? `${(100).toFixed(5)}%` : `${value.toFixed(5)}%`}
                     contentStyle={{
                         backgroundColor: "#1f2933",
                         border: "1px solid #374151",
