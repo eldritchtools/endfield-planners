@@ -12,7 +12,9 @@ function defaultDijiangPlanner() {
         "roomSettings": {
         },
         "operatorSkills": {},
-        "settings": {}
+        "settings": {
+            defaultLevels: [2, 2]
+        }
     };
 }
 
@@ -45,7 +47,7 @@ function migrateProfile(profile = {}) {
     }
 
     let migratedProfile = { ...profile };
-    if(migratedProfile.latestVersion === "1.0") {
+    if (migratedProfile.latestVersion === "1.0") {
         migratedProfile.latestVersion = "1.1";
         migratedProfile.dijiangPlanner.settings.defaultLevels = [2, 2];
     }
