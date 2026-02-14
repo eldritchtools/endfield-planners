@@ -1,4 +1,4 @@
-const LATEST_VERSION = "1.1";
+const LATEST_VERSION = "1.2";
 
 function defaultDijiangPlanner() {
     return {
@@ -47,8 +47,8 @@ function migrateProfile(profile = {}) {
     }
 
     let migratedProfile = { ...profile };
-    if (migratedProfile.latestVersion === "1.0") {
-        migratedProfile.latestVersion = "1.1";
+    if (migratedProfile.latestVersion === "1.0" || migratedProfile.latestVersion === "1.1") {
+        migratedProfile.latestVersion = "1.2";
         migratedProfile.dijiangPlanner.settings.defaultLevels = [2, 2];
     }
 
