@@ -37,6 +37,7 @@ function computeProductivity(operatorsData, profileData) {
         operatorsData[operator.id].baseSkills.forEach((skill, i) => {
             if (skill.room !== "CN") return;
             const level = operator.id in skillLevels ? skillLevels[operator.id][i] : 2;
+            if(level === 0) return;
             if (skill.type === "mood regen") {
                 moodRegen += skill.values[level - 1];
             } else if (skill.type === "mood drain") {
@@ -69,6 +70,7 @@ function computeProductivity(operatorsData, profileData) {
             operatorsData[operator.id].baseSkills.forEach((skill, i) => {
                 if (skill.room !== roomType) return;
                 const level = operator.id in skillLevels ? skillLevels[operator.id][i] : 2;
+                if(level === 0) return;
                 if (skill.type === "mood drain") {
                     moodDrain -= skill.values[level - 1];
                     return;

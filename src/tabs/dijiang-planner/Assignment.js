@@ -38,7 +38,7 @@ function optimizeOperators(operatorsData, profileData, available) {
             let moodBonus = 0;
             const roomType = roomId.split("-")[0];
             skills.forEach((skill, i) => {
-                if (skill.room !== roomType) return;
+                if (skill.room !== roomType || !skillValues[i]) return;
                 if (skill.type === "mood regen") {
                     // CN
                     moodBonus += skillValues[i];
@@ -173,7 +173,7 @@ function optimizeOperators(operatorsData, profileData, available) {
         mcmf.addEdge(roomsMapping[roomId], SNK, availableSlots, 0);
     });
 
-    const mincut = mcmf.mincut();
+    const mincut = mcmf.mincut().sort((a, b) => a.cost - b.cost);
 
     const assignedOperators = new Set();
     mincut.forEach(edge => {
@@ -186,6 +186,7 @@ function optimizeOperators(operatorsData, profileData, available) {
                 id: operatorId,
                 fixed: false
             }
+            if(edge.cost === 100) assignments[roomId][i].filler = true;
             assignedOperators.add(operatorId);
             break;
         }
