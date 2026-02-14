@@ -151,6 +151,34 @@ function Room({ id, assignment, options, setOperator, results }) {
             </div>
     }, [results, type]);
 
+    const constructSelectorImage = (i, op) => {
+        let tooltipParams = null;
+        let styleOverride = null;
+        if (op) {
+            if (op.fixed) {
+                tooltipParams = {
+                    "data-tooltip-id": "dijiangPlannerTooltip",
+                    "data-tooltip-content": "Fixed operator (assigned by user)"
+                };
+                styleOverride = { border: "2px #c4a83c solid", backgroundColor: "#3A2E0A" };
+            } else if (op.filler) {
+                tooltipParams = {
+                    "data-tooltip-id": "dijiangPlannerTooltip",
+                    "data-tooltip-content": "Filler operator (assigned due to lack of operators with skill bonuses)"
+                };
+                styleOverride = { border: "2px #c44a4a solid", backgroundColor: "#3A0A0A" };
+            }
+        }
+        return <div key={i} style={{ width: "80px", height: "96px" }} {...tooltipParams}>
+            <OperatorSelectorImage
+                value={assignment[i]}
+                setValue={v => setOperator(id, i, v)}
+                options={options}
+                styleOverride={styleOverride}
+            />
+        </div>
+    }
+
     return <div style={{
         display: "flex", flexDirection: "column", alignItems: "start", minWidth: "310px", maxWidth: "440px", gap: "0.25rem", padding: "0.5rem",
         backgroundColor: roomData[type].background, border: `2px ${roomData[type].border} solid`, borderRadius: "0.5rem"
@@ -159,21 +187,7 @@ function Room({ id, assignment, options, setOperator, results }) {
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", width: "100%" }}>
             <div style={{ display: "flex", flexDirection: isDesktop ? "row" : "column", gap: isDesktop ? "0.25rem" : "0.5rem", alignItems: "center", width: "100%" }}>
                 <div style={{ display: "flex", flexDirection: "row", gap: "0.2rem" }}>
-                    {
-                        Array.from({ length: 3 }, (_, i) =>
-                            <div key={i} style={{ width: "80px", height: "96px" }}>
-                                <OperatorSelectorImage
-                                    value={assignment[i]}
-                                    setValue={v => setOperator(id, i, v)}
-                                    options={options}
-                                    styleOverride={(assignment[i]?.fixed) ? {
-                                        border: "2px #c4a83c solid",
-                                        backgroundColor: "#3A2E0A"
-                                    } : null}
-                                />
-                            </div>
-                        )
-                    }
+                    {Array.from({ length: 3 }, (_, i) => constructSelectorImage(i, assignment[i]))}
                 </div>
                 {additionalComponents}
             </div>
