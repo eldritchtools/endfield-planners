@@ -36,7 +36,7 @@ function computeProductivity(operatorsData, profileData) {
         if (!operator) return;
         operatorsData[operator.id].baseSkills.forEach((skill, i) => {
             if (skill.room !== "CN") return;
-            const level = operator.id in skillLevels ? skillLevels[operator.id][i] : 2;
+            const level = skillLevels[operator.id]?.[i] ?? profileData.dijiangPlanner.settings.defaultLevels[i];
             if(level === 0) return;
             if (skill.type === "mood regen") {
                 moodRegen += skill.values[level - 1];
@@ -69,7 +69,7 @@ function computeProductivity(operatorsData, profileData) {
             if (!operator) return;
             operatorsData[operator.id].baseSkills.forEach((skill, i) => {
                 if (skill.room !== roomType) return;
-                const level = operator.id in skillLevels ? skillLevels[operator.id][i] : 2;
+                const level = skillLevels[operator.id]?.[i] ?? profileData.dijiangPlanner.settings.defaultLevels[i];
                 if(level === 0) return;
                 if (skill.type === "mood drain") {
                     moodDrain -= skill.values[level - 1];

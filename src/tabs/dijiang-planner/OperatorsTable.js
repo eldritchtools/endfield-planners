@@ -24,7 +24,7 @@ function LevelIndicator({ value, setValue }) {
     </div>
 }
 
-export default function OperatorsTable({ operatorsData, available, fixed, disabled, maxHeight }) {
+export default function OperatorsTable({ operatorsData, available, fixed, disabled }) {
     const { profileData, setProfileData } = useProfiles();
     const [searchString, setSearchString] = useState("");
 
@@ -40,6 +40,13 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
         "fungus": "fungus",
         "plant": "plant"
     };
+
+    const buttonStyle = {
+        fontWeight: "bold", 
+        width: "36px", 
+        height: "36px",
+        padding: 0,
+    }
 
     const constructRow = (id, background = null, isFixed = false) => {
         const data = operatorsData[id];
@@ -62,8 +69,8 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
                     </div>
                     {data.baseSkills[0].room}-{data.baseSkills[0].type}
                     <LevelIndicator
-                        value={id in profileData.dijiangPlanner.operatorSkills ?
-                            profileData.dijiangPlanner.operatorSkills[id][0] : 2
+                        value={profileData.dijiangPlanner.operatorSkills[id]?.[0] ?? 
+                            profileData.dijiangPlanner.settings.defaultLevels[0]
                         }
                         setValue={level => setProfileData(p => ({
                             ...p,
@@ -71,7 +78,7 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
                                 ...p.dijiangPlanner,
                                 operatorSkills: {
                                     ...p.dijiangPlanner.operatorSkills,
-                                    [id]: (p.dijiangPlanner.operatorSkills[id] ?? [2, 2]).map((v, i) => i === 0 ? level : v)
+                                    [id]: (p.dijiangPlanner.operatorSkills[id] ?? [null, null]).map((v, i) => i === 0 ? level : v)
                                 }
                             }
                         }))}
@@ -90,8 +97,8 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
                     </div>
                     {data.baseSkills[1].room}-{data.baseSkills[1].type}
                     <LevelIndicator
-                        value={id in profileData.dijiangPlanner.operatorSkills ?
-                            profileData.dijiangPlanner.operatorSkills[id][1] : 2
+                        value={profileData.dijiangPlanner.operatorSkills[id]?.[1] ?? 
+                            profileData.dijiangPlanner.settings.defaultLevels[1]
                         }
                         setValue={level => setProfileData(p => ({
                             ...p,
@@ -99,7 +106,7 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
                                 ...p.dijiangPlanner,
                                 operatorSkills: {
                                     ...p.dijiangPlanner.operatorSkills,
-                                    [id]: (p.dijiangPlanner.operatorSkills[id] ?? [2, 2]).map((v, i) => i === 1 ? level : v)
+                                    [id]: (p.dijiangPlanner.operatorSkills[id] ?? [null, null]).map((v, i) => i === 1 ? level : v)
                                 }
                             }
                         }))}
@@ -107,9 +114,22 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
                 </div>
             </td>
             <td>
-                {isFixed ? null : (
-                    profileData.operators[id]?.disabled ?
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+                    <button
+                        data-tooltip-id={"dijiangPlannerTooltip"}
+                        data-tooltip-content={`Reset levels back to default`}
+                        onClick={() =>
+                            setProfileData(p => {
+                                const { [id]: rem, ...rest } = p.dijiangPlanner.operatorSkills;
+                                return { ...p, dijiangPlanner: { ...p.dijiangPlanner, operatorSkills: rest } }
+                            })
+                        }
+                        style={{ ...buttonStyle, fontSize: "1.25rem" }}
+                    >
+                        ↺
+                    </button>
+                    {isFixed ? null : (
+                        profileData.operators[id]?.disabled ?
                             <button
                                 data-tooltip-id={"dijiangPlannerTooltip"}
                                 data-tooltip-content={`Enable to allow ${data.name} to be assigned to a room.`}
@@ -117,12 +137,10 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
                                     const { disabled, ...rest } = p.operators[id];
                                     return { ...p, operators: { ...p.operators, [id]: rest } }
                                 })}
-                                style={{ color: "#48ff48", fontSize: "1.25rem", fontWeight: "bold" }}
+                                style={{ ...buttonStyle, color: "#48ff48", fontSize: "1.5rem" }}
                             >
                                 +
-                            </button>
-                        </div> :
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            </button> :
                             <button
                                 data-tooltip-id={"dijiangPlannerTooltip"}
                                 data-tooltip-content={`Disable to prevent ${data.name} from being assigned to a room.`}
@@ -133,12 +151,12 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
                                         [id]: { ...(p.operators[id] ?? {}), disabled: true }
                                     }
                                 }))}
-                                style={{ color: "#ff4848", fontSize: "1.25rem", fontWeight: "bold" }}
+                                style={{ ...buttonStyle, color: "#ff4848", fontSize: "1.5rem" }}
                             >
                                 x
                             </button>
-                        </div>
-                )}
+                    )}
+                </div>
             </td>
         </tr>
     }
@@ -149,10 +167,10 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
     }
 
     return <div style={{ height: "1250px", overflowY: "auto", border: "1px #aaa solid", borderRadius: "0.5rem" }}>
-        <div style={{padding: "0.2rem", maxWidth: "420px"}}>
-        You can disable operators from being assigned or lower their skill levels. 
+        <div style={{ padding: "0.2rem", maxWidth: "420px" }}>
+            You can disable operators from being assigned or lower their skill levels.
         </div>
-        <div style={{display: "flex", gap: "0.2rem", alignItems: "center", paddingLeft: "0.5rem"}}>
+        <div style={{ display: "flex", gap: "0.2rem", alignItems: "center", paddingLeft: "0.5rem" }}>
             Search:
             <input value={searchString} onChange={e => setSearchString(e.target.value)} />
         </div>
@@ -162,10 +180,58 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
                     <th style={stickyHeaderStyle}>Operator</th>
                     <th style={stickyHeaderStyle}>Skill 1</th>
                     <th style={stickyHeaderStyle}>Skill 2</th>
-                    <th style={stickyHeaderStyle}>Disable?</th>
+                    <th style={stickyHeaderStyle}>Actions</th>
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <td>Default<br />Setting</td>
+                    <td>
+                        <div
+                            data-tooltip-id={"dijiangPlannerTooltip"}
+                            data-tooltip-content={`Default levels for operator E1/3 skill. Affects all operators whose E1/3 skill have not been manually set.`}
+                            style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0.1rem" }}
+                        >
+                            <span>E1/3 Skill</span>
+                            <LevelIndicator
+                                value={profileData.dijiangPlanner.settings.defaultLevels[0]}
+                                setValue={level => setProfileData(p => ({
+                                    ...p,
+                                    dijiangPlanner: {
+                                        ...p.dijiangPlanner,
+                                        settings: {
+                                            ...p.dijiangPlanner.settings,
+                                            defaultLevels: [level, p.dijiangPlanner.settings.defaultLevels[1]]
+                                        }
+                                    }
+                                }))}
+                            />
+                        </div>
+                    </td>
+                    <td>
+                        <div
+                            data-tooltip-id={"dijiangPlannerTooltip"}
+                            data-tooltip-content={`Default levels for operator E2/4 skill. Affects all operators whose E2/4 skill have not been manually set.`}
+                            style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "0.1rem" }}
+                        >
+                            <span>E2/4 Skill</span>
+                            <LevelIndicator
+                                value={profileData.dijiangPlanner.settings.defaultLevels[1]}
+                                setValue={level => setProfileData(p => ({
+                                    ...p,
+                                    dijiangPlanner: {
+                                        ...p.dijiangPlanner,
+                                        settings: {
+                                            ...p.dijiangPlanner.settings,
+                                            defaultLevels: [p.dijiangPlanner.settings.defaultLevels[0], level]
+                                        }
+                                    }
+                                }))}
+                            />
+                        </div>
+                    </td>
+                    <td />
+                </tr>
                 {available.filter(filterFunc).map(id => constructRow(id))}
                 {fixed.filter(filterFunc).map(id => constructRow(id, "#3A2E0A", true))}
                 {disabled.filter(filterFunc).map(id => constructRow(id, "#3A0D0D"))}

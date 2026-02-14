@@ -29,7 +29,8 @@ function optimizeOperators(operatorsData, profileData, available) {
     const roomScore = {};
     Object.keys(operatorsData).forEach(operatorId => {
         const scoreDict = {};
-        const skillLevels = profileData.dijiangPlanner.operatorSkills[operatorId] ?? [2, 2];
+        const skillLevels = (profileData.dijiangPlanner.operatorSkills[operatorId] ?? [null, null])
+            .map((x, i) => x === null ? profileData.dijiangPlanner.settings.defaultLevels[i] : x);
         const skills = operatorsData[operatorId].baseSkills;
         const skillValues = skills.map((skill, i) => skill.values[skillLevels[i] - 1]);
 
@@ -163,7 +164,7 @@ function optimizeOperators(operatorsData, profileData, available) {
         Object.keys(profileData.dijiangPlanner.roomAssignments).forEach(roomId => {
             if (roomId === "CN") return;
             const score = roomScore[operatorId][roomId] - (0.000001 * roomScore[operatorId]["CN"]);
-            mcmf.addEdge(operatorsMapping[operatorId], roomsMapping[roomId], 1, 100-score);
+            mcmf.addEdge(operatorsMapping[operatorId], roomsMapping[roomId], 1, 100 - score);
         })
     });
 
@@ -186,7 +187,7 @@ function optimizeOperators(operatorsData, profileData, available) {
                 id: operatorId,
                 fixed: false
             }
-            if(edge.cost === 100) assignments[roomId][i].filler = true;
+            if (edge.cost === 100) assignments[roomId][i].filler = true;
             assignedOperators.add(operatorId);
             break;
         }
