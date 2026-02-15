@@ -1,0 +1,27 @@
+.dark-scrollable {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #444 #1a1a1a; /* Firefox thumb | track */
+}
+
+.weapon-button {
+  background-color: #1a1a1a;
+  border: 1px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.weapon-button:hover {
+  background-color: #3a3a3a;
+  cursor: pointer;
+}
+
+.weapon-button-active {
+  background-color: #3a3a3a;
+  color: #fff;
+  border: 1px solid transparent;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.weapon-button-active:hover {
+  background-color: #4a4a4a;
+  cursor: pointer;
+}

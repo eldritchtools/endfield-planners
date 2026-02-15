@@ -1,4 +1,4 @@
-const LATEST_VERSION = "1.2";
+const LATEST_VERSION = "1.3";
 
 function defaultDijiangPlanner() {
     return {
@@ -30,6 +30,17 @@ function defaultOperators() {
     return {};
 }
 
+function defaultEssenceFarming() {
+    return {
+        high: [],
+        low: [],
+        settings: {
+            statsShownLevel: 1,
+            showStatNames: false
+        }
+    };
+}
+
 function defaultSettings() {
     return {};
 }
@@ -42,6 +53,7 @@ function migrateProfile(profile = {}) {
             pullCalculator: defaultPullCalculator(),
             factoryCalculator: defaultFactoryCalculator(),
             operators: defaultOperators(),
+            essenceFarming: defaultEssenceFarming(),
             settings: defaultSettings()
         }
     }
@@ -51,6 +63,13 @@ function migrateProfile(profile = {}) {
         migratedProfile.latestVersion = "1.2";
         migratedProfile.dijiangPlanner.settings.defaultLevels = [2, 2];
     }
+
+    if (migratedProfile.latestVersion === "1.2") {
+        migratedProfile.latestVersion = "1.3";
+        migratedProfile.essenceFarming = { high: [], low: [], settings: { statsShownLevel: 1, showStatNames: false } };
+    }
+
+    // DON'T FORGET TO UPDATE THE DEFAULTS WHEN ADDING NEW THINGS
 
     return migratedProfile;
 }

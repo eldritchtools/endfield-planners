@@ -85,6 +85,14 @@ function useTriggers() {
     return useData("data/triggers");
 }
 
+function useWeapons() {
+    return useData("data/weapons");
+}
+
+function useEnergyAlluviums() {
+    return useData("data/energy_alluviums");
+}
+
 function getImagePath(type, id) {
     return `${ROOT_PATH}/assets/${type}/${id}.png`;
 }
@@ -93,4 +101,4 @@ async function getMeta() {
     return await (await fetch(`${ROOT_PATH}/meta.json`)).json();
 }
 
-export { getMeta, useOperators, useBaseSkills, getImagePath, useSkills, useTriggers };
+export { getMeta, useOperators, useBaseSkills, getImagePath, useSkills, useTriggers, useWeapons, useEnergyAlluviums };

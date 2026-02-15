@@ -13,8 +13,10 @@ export default function HomeTab() {
         <br /> <br />
         <LinkComponent href={"/dijiang-planner"}>Dijiang Planner</LinkComponent> - Plan out and optimize operator assignments in Dijiang rooms.
         <br /> <br />
-        <LinkComponent href={"/pull-calculator"}>Pull Calculator</LinkComponent> - Compute rates for banner pulls
+        <LinkComponent href={"/pull-calculator"}>Pull Calculator</LinkComponent> - Compute rates for banner pulls.
         <br /> <br />
         <LinkComponent href={"/operator-interactions-map"}>Operator Interactions Map</LinkComponent> - View combos or interactions between operators.
+        <br /> <br />
+        <LinkComponent href={"/essence-farming"}>Essence Farming</LinkComponent> - Find the best farming spots for essences.
     </div>
 }

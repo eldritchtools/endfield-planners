@@ -57,16 +57,22 @@ input[type="checkbox"] {
 
 .toggle-button:hover {
   background-color: #3a3a3a;
+  cursor: pointer;
 }
 
-.toggle-button.active {
+.toggle-button-active {
   background-color: #4caf50;
   color: #fff;
-  border-color: #4caf50;
+  border: 1px solid #4caf50;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 2px;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
-.toggle-button.active:hover {
+.toggle-button-active:hover {
   background-color: #45a049;
+  cursor: pointer;
 }
 
 .tabs {
