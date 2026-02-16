@@ -144,7 +144,7 @@ function Alluvium({ alluvium, high, low, unselected, statsShownLevel, showStatNa
     >
         <h3 style={{ alignSelf: "center", margin: 0 }}>{alluvium.name}</h3>
         <div style={{ display: "flex", gap: "0.2rem", flexWrap: "wrap", alignItems: "center" }}>
-            Primary Stats:
+            Attribute Stats:
             {pri
                 .filter(([id, prio, num]) => prio <= statsShownLevel)
                 .map(([id, prio, num]) => <StatPill key={id} name={id} prio={prio} num={num} />)
@@ -365,7 +365,9 @@ export default function EssenceFarmingSolverTab() {
             <br />
             - Most perfect matches in unselected 6★ weapons
             <br />
-            Stats available in each alluvium are also shown with the same criteria as above and are color coded depending on the highest criteria they fulfill.
+            Stats available in each alluvium are also shown with the same criteria and are color coded depending on the highest criteria they fulfill.
+            <br />
+            When pre-engraving, take the top 3 attribute stats and the top secondary or skill stat. Either choice works if the numbers are the same.
         </p>
 
         <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
