@@ -152,6 +152,8 @@ export function GraphView({ graph, selectedNode, setSelectedNode }) {
                 proOptions={{ hideAttribution: true }}
                 nodesConnectable={false}
                 edgesFocusable={false}
+                minZoom={0.05}
+                maxZoom={2}
                 fitView
             >
                 <Controls />
