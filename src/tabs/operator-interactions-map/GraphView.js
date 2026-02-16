@@ -12,7 +12,7 @@ import OperatorNode from './OperatorNode';
 import SkillNode from './SkillNode';
 import TriggerNode from './TriggerNode';
 import { forceSimulation, forceManyBody, forceLink, forceCenter, forceCollide } from 'd3-force';
-import "./GraphView.css";
+import "./OperatorInteractionsMap.css";
 
 const nodeTypes = {
     "operator": OperatorNode,
@@ -52,9 +52,8 @@ function layout(nodes, edges) {
 }
 
 
-export function GraphView({ graph }) {
+export function GraphView({ graph, selectedNode, setSelectedNode }) {
     const reactFlowInstance = useReactFlow();
-    const [selectedNode, setSelectedNode] = useState(null);
     const [inConnections, setInConnections] = useState({});
     const [outConnections, setOutConnections] = useState({});
     const [graphChanged, setGraphChanged] = useState(false);
@@ -91,7 +90,7 @@ export function GraphView({ graph }) {
         setSelectedNode(null);
         setGraphChanged(true);
         return { nodes: finalNodes, edges };
-    }, [graph]);
+    }, [graph, setSelectedNode]);
     const [nodes, setNodes, onNodesChange] = useNodesState(subgraph.nodes);
     const [edges, setEdges, onEdgesChange] = useEdgesState(subgraph.edges);
 
@@ -140,7 +139,7 @@ export function GraphView({ graph }) {
     }, [subgraph, graphChanged, inConnections, outConnections, selectedNode, setNodes, setEdges]);
 
     return (
-        <div style={{ height: '80vh', border: "1px #ddd solid", borderRadius: "1rem" }}>
+        <div style={{ height: '80vh', maxHeight: "800px", border: "1px #ddd solid", borderRadius: "1rem" }}>
             <ReactFlow
                 nodes={nodes}
                 edges={edges}
