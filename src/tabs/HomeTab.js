@@ -17,6 +17,6 @@ export default function HomeTab() {
         <br /> <br />
         <LinkComponent href={"/operator-interactions-map"}>Operator Interactions Map</LinkComponent> - View combos or interactions between operators.
         <br /> <br />
-        <LinkComponent href={"/essence-farming"}>Essence Farming</LinkComponent> - Find the best farming spots for essences.
+        <LinkComponent href={"/essence-farming-solver"}>Essence Farming Solver</LinkComponent> - Find the best farming spots for essences.
     </div>
 }
