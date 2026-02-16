@@ -7,6 +7,7 @@ import { projectGraph, useInteractionsGraph } from './graph';
 import { GraphView } from './GraphView';
 import SkillTooltip from './SkillTooltip';
 import { ReactFlowProvider } from '@xyflow/react';
+import GraphDetails from './GraphDetails';
 
 function GraphControls({ viewSpec, onChange }) {
     const [operators, operatorsLoading] = useOperators();
@@ -116,10 +117,6 @@ function GraphControls({ viewSpec, onChange }) {
     </div>;
 }
 
-function GraphDetails() {
-    return null;
-}
-
 export default function OperatorInteractionsMapTab() {
     const [viewSpec, setViewSpec] = useState({
         mode: "operator",
@@ -127,6 +124,7 @@ export default function OperatorInteractionsMapTab() {
     });
 
     const [graph, graphLoading] = useInteractionsGraph();
+    const [selectedNode, setSelectedNode] = useState(null);
     const subgraph = useMemo(() => projectGraph(graph, viewSpec), [graph, viewSpec]);
 
     return <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -144,10 +142,10 @@ export default function OperatorInteractionsMapTab() {
         {graphLoading ?
             null :
             <ReactFlowProvider>
-                <GraphView graph={subgraph} />
+                <GraphView graph={subgraph} selectedNode={selectedNode} setSelectedNode={setSelectedNode}/>
             </ReactFlowProvider>
         }
-        <GraphDetails graph={subgraph} />
+        <GraphDetails graph={subgraph} viewSpec={viewSpec} selectedNode={selectedNode} />
         <SkillTooltip />
     </div>;
 }

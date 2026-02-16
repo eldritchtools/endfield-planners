@@ -1,6 +1,6 @@
 import { Handle, Position } from '@xyflow/react';
 import { useSkills } from '../../DataProvider';
-import "./GraphView.css";
+import "./OperatorInteractionsMap.css";
 
 export default function SkillNode({ data }) {
     const [skills, skillsLoading] = useSkills();
