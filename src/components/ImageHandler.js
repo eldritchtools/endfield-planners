@@ -29,4 +29,9 @@ function IconImage({ id, width, height }) {
     return <img src={getImagePath("icons", id)} alt={id} style={style} />
 }
 
-export { OperatorImage, ItemImage, BaseIconImage, IconImage };
+function WeaponImage({ id, width, height }) {
+    const style = { width: width, height: height };
+    return <img src={getImagePath("weapons", id)} alt={id} style={style} />
+}
+
+export { OperatorImage, ItemImage, BaseIconImage, IconImage, WeaponImage };
