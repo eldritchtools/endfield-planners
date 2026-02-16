@@ -257,7 +257,7 @@ function Alluvium({ alluvium, high, low, unselected, statsShownLevel, showStatNa
     </div>
 }
 
-export default function EssenceFarmingTab() {
+export default function EssenceFarmingSolverTab() {
     const { profileData, setProfileData } = useProfiles();
     const [weapons, weaponsLoading] = useWeapons();
     const [alluviums, alluviumsLoading] = useEnergyAlluviums();
@@ -348,7 +348,7 @@ export default function EssenceFarmingTab() {
     if (weaponsLoading || alluviumsLoading) return null;
 
     return <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
-        <h2>Essence Farming</h2>
+        <h2>Essence Farming Solver</h2>
 
         <p style={{ marginBottom: "8px", textAlign: "start", lineHeight: "1.3", width: "100%", maxWidth: "1000px" }}>
             Find the best farming spots for essences depending on the weapons you plan to farm for.
