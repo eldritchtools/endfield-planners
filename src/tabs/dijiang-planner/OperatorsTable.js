@@ -124,6 +124,7 @@ export default function OperatorsTable({ operatorsData, available, fixed, disabl
                                 return { ...p, dijiangPlanner: { ...p.dijiangPlanner, operatorSkills: rest } }
                             })
                         }
+                        disabled={!(id in profileData.dijiangPlanner.operatorSkills)}
                         style={{ ...buttonStyle, fontSize: "1.25rem" }}
                     >
                         ↺
