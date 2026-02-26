@@ -393,12 +393,12 @@ function ControlsPanel({ items, facilities, recipes, profileData, setProfileData
             </h3>
         </div>
         <span style={{ color: "#aaa", fontSize: "0.8rem", textAlign: "start" }}>
-            Settings for the solver. Also displays the total score generated and power consumed. <br/>
-            Group by changes how recipes are displayed on the table below. The Output mode can sometimes unnecessarily "break apart" some recipes to multiple rows or miss some numbers particularly for circular recipes like planting. <br/>
+            Settings for the solver. Also displays the total score generated and power consumed. <br />
+            Group by changes how recipes are displayed on the table below. The Output mode can sometimes unnecessarily "break apart" some recipes to multiple rows or miss some numbers particularly for circular recipes like planting. <br />
             Mode changes whether the solver only computes the required recipes for the specified target outputs or attempts to use all remaining resources to maximize the score.
         </span>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "start", gap: "0.25rem" }}>
-            <div style={{display: "flex", alignItems: "center", gap: "0.2rem"}}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.2rem" }}>
                 Group by:
                 <select
                     value={settings.grouping}
@@ -408,7 +408,7 @@ function ControlsPanel({ items, facilities, recipes, profileData, setProfileData
                     <option value={"output"}>Output</option>
                 </select>
             </div>
-            <div style={{display: "flex", alignItems: "center", gap: "0.2rem"}}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.2rem" }}>
                 Mode:
                 <select
                     value={settings.mode}
@@ -501,11 +501,11 @@ export default function FactoryCalculatorTab() {
         <h2 style={{ marginBottom: 0 }}>Factory Calculator</h2>
         <p style={{ textAlign: "start", maxWidth: "1000px", lineHeight: "1.3" }}>
             Maximize the stock bills you produce in your factory or assign custom score values to items to find the best combination of them to produce.
-            <br/> <br/>
+            <br /> <br />
             The optimizer will find solutions that only partially use some facilities or production lines. Numbers may be slightly off for partial buildings due to rounding errors.
-            <br/> <br/>
+            <br /> <br />
             The optimizer does not account for interchangeable products (e.g. Buck Capsule vs Canned Citrome products). You have to specify them in Required Outputs if you want to see a specific one.
-            <br/> <br/>
+            <br /> <br />
             Note that the highest score is not always the optimal configuration (e.g. if you'd need to consume an extra battery or a number of other situations). You may want to experiment with Required Outputs until you find the configuration that best works for you.
         </p>
         <ControlsPanel items={factoryItems} facilities={facilities} recipes={recipes}
@@ -514,7 +514,9 @@ export default function FactoryCalculatorTab() {
         />
         <div style={{ display: "flex", justifyContent: "center" }}>
             {feasible ?
-                <RecipesTable profileData={profileData} computedProducts={computedProducts} computedRecipes={computedRecipes} /> :
+                <div style={{ overflowX: "auto" }}>
+                    <RecipesTable profileData={profileData} computedProducts={computedProducts} computedRecipes={computedRecipes} />
+                </div> :
                 <span style={{ color: "#dc3545" }}>Configuration is not feasible.</span>
             }
         </div>
