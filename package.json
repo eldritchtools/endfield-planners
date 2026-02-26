@@ -5,7 +5,7 @@
   "private": true,
   "dependencies": {
     "@algorithm.ts/mcmf": "^4.0.4",
-    "@eldritchtools/shared-components": "github:eldritchtools/shared-components#v1.5.22",
+    "@eldritchtools/shared-components": "github:eldritchtools/shared-components#v1.5.26",
     "@radix-ui/react-select": "^2.2.6",
     "@radix-ui/react-switch": "^1.2.6",
     "@testing-library/dom": "^10.4.1",
@@ -14,6 +14,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@xyflow/react": "^12.10.0",
     "d3-force": "^3.0.0",
+    "javascript-lp-solver": "^1.0.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-icons": "^5.5.0",

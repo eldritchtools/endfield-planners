@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import ResultsChart from "./ResultsChart";
 import MechanicsModal from "./MechanicsModal";
+import { NumInputComponent } from "../../components/utils";
 
 const BANNERS = {
     "Chartered": {
@@ -41,24 +42,14 @@ const BANNERS = {
     }
 }
 
-const inputStyle = { width: "5ch", textAlign: "center", marginRight: "4px" };
-
-const handleSetNumberInput = (val, setValue, force, min, max) => {
-    const parsed = parseInt(val, 10);
-    const v = force ? (isNaN(parsed) ? min : Math.min(max, Math.max(min, val))) : parsed;
-    setValue(v);
-}
-
 function CharteredParams({ params, setParams, isComputing }) {
-    const setValue = (k, v) => setParams(p => ({ ...p, [k]: v }));
-
-    const numInputComponent = (key, min, max) => {
-        return <input type="number" min={min} max={max} value={params[key]} disabled={isComputing}
-            onChange={e => handleSetNumberInput(e.target.value, v => setValue(key, v), false)}
-            onBlur={e => handleSetNumberInput(e.target.value, v => setValue(key, v), true, min, max)}
-            style={inputStyle}
+    const numInputComponent = (key, min, max) => 
+        <NumInputComponent 
+            value={params[key]} 
+            setValue={v => setParams(p => ({ ...p, [key]: v }))} 
+            min={min} max={max} 
+            disabled={isComputing} 
         />
-    }
 
     return <div style={{ display: "flex", alignItems: "center", marginBottom: "16px", gap: "16px", flexWrap: "wrap" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", alignItems: "start" }}>
@@ -81,7 +72,7 @@ function CharteredParams({ params, setParams, isComputing }) {
                 <label>Pulls until 6★</label>
             </div>
             <div>
-                {numInputComponent("pullsUntil5", 1, 9)}
+                {numInputComponent("pullsUntil5", 1, 10)}
                 <label>Pulls until 5★</label>
             </div>
             <div>
@@ -114,15 +105,13 @@ function CharteredParams({ params, setParams, isComputing }) {
 }
 
 function BasicParams({ params, setParams, isComputing }) {
-    const setValue = (k, v) => setParams(p => ({ ...p, [k]: v }));
-
-    const numInputComponent = (key, min, max) => {
-        return <input type="number" min={min} max={max} value={params[key]} disabled={isComputing}
-            onChange={e => handleSetNumberInput(e.target.value, v => setValue(key, v), false)}
-            onBlur={e => handleSetNumberInput(e.target.value, v => setValue(key, v), true, min, max)}
-            style={inputStyle}
+    const numInputComponent = (key, min, max) => 
+        <NumInputComponent 
+            value={params[key]} 
+            setValue={v => setParams(p => ({ ...p, [key]: v }))} 
+            min={min} max={max} 
+            disabled={isComputing} 
         />
-    }
 
     return <div style={{ display: "flex", alignItems: "center", marginBottom: "16px", gap: "16px", flexWrap: "wrap" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", alignItems: "start" }}>
@@ -148,7 +137,7 @@ function BasicParams({ params, setParams, isComputing }) {
                 <label>Pulls until 6★</label>
             </div>
             <div>
-                {numInputComponent("pullsUntil5", 1, 9)}
+                {numInputComponent("pullsUntil5", 1, 10)}
                 <label>Pulls until 5★</label>
             </div>
             <div>
@@ -160,15 +149,13 @@ function BasicParams({ params, setParams, isComputing }) {
 }
 
 function ArsenalParams({ params, setParams, isComputing }) {
-    const setValue = (k, v) => setParams(p => ({ ...p, [k]: v }));
-
-    const numInputComponent = (key, min, max) => {
-        return <input type="number" min={min} max={max} value={params[key]} disabled={isComputing}
-            onChange={e => handleSetNumberInput(e.target.value, v => setValue(key, v), false)}
-            onBlur={e => handleSetNumberInput(e.target.value, v => setValue(key, v), true, min, max)}
-            style={inputStyle}
+    const numInputComponent = (key, min, max) => 
+        <NumInputComponent 
+            value={params[key]} 
+            setValue={v => setParams(p => ({ ...p, [key]: v }))} 
+            min={min} max={max} 
+            disabled={isComputing} 
         />
-    }
 
     let gf6 = 18 - params.pullsOnBanner, gnf6 = 10 - params.pullsOnBanner;
     while (gf6 <= 0) gf6 += 16;
@@ -390,17 +377,19 @@ export default function PullCalculatorTab() {
 
         <h3>Rates for at least n copies of the target 6★</h3>
         <div style={{ display: "flex", alignItems: "center", gap: "0.2rem", marginBottom: "16px" }}>
-            <input type="number" min={1} max={100} value={chartCompression} disabled={isComputing}
-                onChange={e => handleSetNumberInput(e.target.value, setChartCompression, false)}
-                onBlur={e => handleSetNumberInput(e.target.value, setChartCompression, true, 1, 100)}
-                style={inputStyle}
+            <NumInputComponent 
+                value={chartCompression} 
+                setValue={setChartCompression} 
+                min={1} max={100} 
+                disabled={isComputing} 
             />
             <div>Pulls per point</div>
             <div style={{width: "0.5rem"}}/>
-            <input type="number" min={1} max={params?.maxPulls ?? 1} value={hoveredPull} disabled={isComputing}
-                onChange={e => handleSetNumberInput(e.target.value, setHoveredPull, false)}
-                onBlur={e => handleSetNumberInput(e.target.value, setHoveredPull, true, 0, params?.maxPulls ?? 1)}
-                style={inputStyle}
+            <NumInputComponent 
+                value={hoveredPull} 
+                setValue={setHoveredPull} 
+                min={1} max={params?.maxPulls ?? 1} 
+                disabled={isComputing} 
             />
             <div>Viewed pull</div>
             <div style={{width: "0.5rem"}}/>

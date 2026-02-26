@@ -20,7 +20,7 @@ export default function Modal({ isOpen, onClose, noClose, children }) {
         borderRadius: "12px",
         maxWidth: "600px",
         maxHeight: "80vh",
-        overflowY: "auto",
+        overflowY: "visible",
         boxShadow: "0 4px 12px rgba(0,0,0,0.4)",
     };
 

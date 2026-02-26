@@ -18,7 +18,7 @@ function ItemTextSelector({ value, setValue, options }) {
 
     return <ReactSelect
         options={finalOptions}
-        value={optionsMapped[value]}
+        value={optionsMapped[value] ?? null}
         onChange={opt => setValue(opt ? opt.value : null)}
         styles={selectStyle}
         isClearable={true}

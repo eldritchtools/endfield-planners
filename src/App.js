@@ -13,6 +13,8 @@ import FactoryCalculatorTab from './tabs/factory-calculator/FactoryCalculatorTab
 import EssenceFarmingSolverTab from './tabs/essence-farming-solver/EssenceFarmingSolver';
 import ProfilesTab from './tabs/profiles/ProfilesTab';
 import { DataProvider, getMeta } from './DataProvider';
+import { Tooltip } from 'react-tooltip';
+import { tooltipStyle } from './styles';
 
 const description = <span>
   Endfield Planners is a free fan-made collection of tools to help players with their gameplay in Arknights: Endfield.
@@ -26,8 +28,8 @@ const paths = [
   { path: "/dijiang-planner", title: "Dijiang Planner" },
   { path: "/pull-calculator", title: "Pull Calculator" },
   { path: "/operator-interactions-map", title: "Operator Interactions Map" },
-  // { path: "/factory-calculator", title: "Factory Calculator" },
   { path: "/essence-farming-solver", title: "Essence Farming Solver"},
+  { path: "/factory-calculator", title: "Factory Calculator" },
   { path: "/profiles", title: "Profiles" }
 ]
 
@@ -72,7 +74,7 @@ function App() {
                 </Routes>
               </div>
 
-              {/* <Tooltip id={"genericTooltip"} render={({ content }) => <div style={{ whiteSpace: "pre-wrap" }}>{content}</div>} style={tooltipStyle} /> */}
+              <Tooltip id={"genericTooltip"} render={({ content }) => <div style={{ whiteSpace: "pre-wrap" }}>{content}</div>} style={tooltipStyle} />
             </div>
           </Layout>
         </HashRouter>
