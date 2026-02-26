@@ -15,9 +15,9 @@ function OperatorImage({ id, width, height }) {
     return <img src={getImagePath("operators", id)} alt={id} style={style} />
 }
 
-function ItemImage({ id, width, height }) {
-    const style = { width: width, height: height };;
-    return <img src={getImagePath("items", id)} alt={id} style={style} />
+function ItemImage({ id, width, height, name }) {
+    const style = { width: width, height: height };
+    return <img src={getImagePath("items", id)} alt={id} title={name} style={style} />
 }
 
 function BaseIconImage({ id }) {
@@ -34,4 +34,9 @@ function WeaponImage({ id, width, height }) {
     return <img src={getImagePath("weapons", id)} alt={id} style={style} />
 }
 
-export { OperatorImage, ItemImage, BaseIconImage, IconImage, WeaponImage };
+function FacilityImage({ id, width, height }) {
+    const style = { width: width, height: height };
+    return <img src={getImagePath("facilities", id)} alt={id} style={style} />
+}
+
+export { OperatorImage, ItemImage, BaseIconImage, IconImage, WeaponImage, FacilityImage };

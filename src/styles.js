@@ -100,6 +100,14 @@ const selectStyleVariable = {
     }),
 };
 
-const tooltipStyle = { outlineStyle: "solid", outlineColor: "#ddd", outlineWidth: "1px", backgroundColor: "#000000", borderRadius: "1rem", zIndex: "9999", maxWidth: "90%" };
+const tooltipStyle = { 
+    outlineStyle: "solid", 
+    outlineColor: "#ddd", 
+    outlineWidth: "1px", 
+    backgroundColor: "#000000", 
+    borderRadius: "1rem", 
+    zIndex: "9999", 
+    maxWidth: "min(800px, 90vw)" 
+};
 
 export { tooltipStyle, selectStyle, selectStyleWide, selectStyleVariable };

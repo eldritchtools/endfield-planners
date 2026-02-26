@@ -23,7 +23,14 @@ function defaultPullCalculator() {
 }
 
 function defaultFactoryCalculator() {
-    return {};
+    return {
+        currentRegion: "valley4",
+        scoreOverrides: {},
+        resourceIncomeOverrides: {},
+        transfers: {},
+        targetProducts: {},
+        settings: { grouping: "facility", mode: "solve" }
+    };
 }
 
 function defaultOperators() {
@@ -67,6 +74,18 @@ function migrateProfile(profile = {}) {
     if (migratedProfile.latestVersion === "1.2") {
         migratedProfile.latestVersion = "1.3";
         migratedProfile.essenceFarming = { high: [], low: [], settings: { statsShownLevel: 1, showStatNames: false } };
+    }
+
+    if (migratedProfile.latestVersion === "1.3") {
+        migratedProfile.latestVersion = "1.4";
+        migratedProfile.factoryCalculator = {
+            currentRegion: "valley4",
+            scoreOverrides: {},
+            resourceIncomeOverrides: {},
+            transfers: {},
+            targetProducts: {},
+            settings: { grouping: "facility", mode: "solve" }
+        }
     }
 
     // DON'T FORGET TO UPDATE THE DEFAULTS WHEN ADDING NEW THINGS
