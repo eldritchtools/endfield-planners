@@ -148,6 +148,7 @@ function Room({ id, assignment, options, setOperator, results }) {
                 <div>Work Time: {results["workTime"]}</div>
                 <div>Operator Uptime: {results["operatorUptime"]}</div>
                 {"efficiency" in results ? <div>Avg. Efficiency: {results["efficiency"]}</div> : <div />}
+                {"duration" in results ? <div>Time per Clue: {results["duration"]}</div> : <div />}
             </div>
     }, [results, type]);
 
