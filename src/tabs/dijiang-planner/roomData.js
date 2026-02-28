@@ -144,7 +144,8 @@ const roomData = {
     "RR": {
         name: "Reception Room",
         background: "rgba(124, 93, 163, 0.25)",
-        border: "#6a4e8a"
+        border: "#6a4e8a",
+        duration: 88000
     }
 }
 

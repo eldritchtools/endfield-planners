@@ -172,7 +172,9 @@ function computeProductivity(operatorsData, profileData) {
                 }
             })
         } else if (roomType === "RR") {
+            const duration = roomData["RR"].duration / efficiencies["efficiency"];
             result[roomId]["efficiency"] = decimalToPercentFixed(efficiencies["efficiency"]);
+            result[roomId]["duration"] = secondsToString(duration);
         }
     })
 
