@@ -1,7 +1,7 @@
 import { useProfiles } from "@eldritchtools/shared-components";
 import { useEnergyAlluviums, useWeapons } from "../../DataProvider";
 import { useMemo } from "react";
-import WeaponSelector, { WeaponComponent } from "./WeaponSelector";
+import WeaponSelector, { WeaponComponent } from "../../components/WeaponSelector";
 import { Tooltip } from "react-tooltip";
 import { tooltipStyle } from "../../styles";
 
