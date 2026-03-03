@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./WeaponSelector.css";
-import { WeaponImage } from "../../components/ImageHandler";
-import { useWeapons } from "../../DataProvider";
+import { WeaponImage } from "./ImageHandler";
+import { useWeapons } from "../DataProvider";
 
 
 const rank_color_mapping = { 6: "#FF7000", 5: "#FFBA03", 4: "#9451F8", 3: "#5AC4FA" }

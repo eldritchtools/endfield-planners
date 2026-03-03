@@ -11,6 +11,7 @@ import PullCalculatorTab from './tabs/pull-calculator/PullCalculatorTab';
 import OperatorInteractionsMapTab from './tabs/operator-interactions-map/OperatorInteractionsMapTab';
 import FactoryCalculatorTab from './tabs/factory-calculator/FactoryCalculatorTab';
 import EssenceFarmingSolverTab from './tabs/essence-farming-solver/EssenceFarmingSolver';
+import EssenceCheckerTab from './tabs/essence-checker/EssenceChecker';
 import ProfilesTab from './tabs/profiles/ProfilesTab';
 import { DataProvider, getMeta } from './DataProvider';
 import { Tooltip } from 'react-tooltip';
@@ -29,6 +30,7 @@ const paths = [
   { path: "/pull-calculator", title: "Pull Calculator" },
   { path: "/operator-interactions-map", title: "Operator Interactions Map" },
   { path: "/essence-farming-solver", title: "Essence Farming Solver"},
+  { path: "/essence-checker", title: "Essence Checker"},
   { path: "/factory-calculator", title: "Factory Calculator" },
   { path: "/profiles", title: "Profiles" }
 ]
@@ -70,6 +72,7 @@ function App() {
                   <Route path="/operator-interactions-map" element={<OperatorInteractionsMapTab />} />
                   <Route path="/factory-calculator" element={<FactoryCalculatorTab />} />
                   <Route path="/essence-farming-solver" element={<EssenceFarmingSolverTab />} />
+                  <Route path="/essence-checker" element={<EssenceCheckerTab />} />
                   <Route path="/profiles" element={<ProfilesTab />} />
                 </Routes>
               </div>

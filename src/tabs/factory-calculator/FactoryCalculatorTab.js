@@ -10,6 +10,7 @@ import { ItemTextSelector } from "../../components/ItemSelector";
 import Modal from "../../components/Modal";
 import RecipesTable from "./RecipesTable";
 import { compute } from "./compute";
+import RecipesGraph from "./RecipesGraph";
 
 const resetButtonStyle = { fontWeight: "bold", width: "24px", height: "24px", padding: 0, fontSize: "1rem", cursor: "pointer" };
 
@@ -399,6 +400,16 @@ function ControlsPanel({ items, facilities, recipes, profileData, setProfileData
         </span>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "start", gap: "0.25rem" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "0.2rem" }}>
+                View mode:
+                <select
+                    value={settings.view}
+                    onChange={e => setSettings("view", e.target.value)}
+                >
+                    <option value={"table"}>Table</option>
+                    <option value={"chart"}>Flowchart</option>
+                </select>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.2rem" }}>
                 Group by:
                 <select
                     value={settings.grouping}
@@ -514,9 +525,14 @@ export default function FactoryCalculatorTab() {
         />
         <div style={{ display: "flex", justifyContent: "center" }}>
             {feasible ?
-                <div style={{ overflowX: "auto" }}>
-                    <RecipesTable profileData={profileData} computedProducts={computedProducts} computedRecipes={computedRecipes} />
-                </div> :
+                (profileData.factoryCalculator.settings.view === "table" ?
+                    <div style={{ overflowX: "auto" }}>
+                        <RecipesTable profileData={profileData} computedProducts={computedProducts} computedRecipes={computedRecipes} />
+                    </div> :
+                    <div style={{width: "100%"}}>
+                        <RecipesGraph profileData={profileData} computedProducts={computedProducts} computedRecipes={computedRecipes} />
+                    </div>
+                ) :
                 <span style={{ color: "#dc3545" }}>Configuration is not feasible.</span>
             }
         </div>

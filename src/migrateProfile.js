@@ -1,4 +1,4 @@
-const LATEST_VERSION = "1.3";
+const LATEST_VERSION = "1.6";
 
 function defaultDijiangPlanner() {
     return {
@@ -29,7 +29,7 @@ function defaultFactoryCalculator() {
         resourceIncomeOverrides: {},
         transfers: {},
         targetProducts: {},
-        settings: { grouping: "facility", mode: "solve" }
+        settings: { grouping: "facility", mode: "solve", view: "table" }
     };
 }
 
@@ -48,6 +48,14 @@ function defaultEssenceFarming() {
     };
 }
 
+function defaultEssenceChecker() {
+    return {
+        essences: [],
+        minRank: 6,
+        showStatNames: false
+    };
+}
+
 function defaultSettings() {
     return {};
 }
@@ -61,6 +69,7 @@ function migrateProfile(profile = {}) {
             factoryCalculator: defaultFactoryCalculator(),
             operators: defaultOperators(),
             essenceFarming: defaultEssenceFarming(),
+            essenceChecker: defaultEssenceChecker(),
             settings: defaultSettings()
         }
     }
@@ -86,6 +95,20 @@ function migrateProfile(profile = {}) {
             targetProducts: {},
             settings: { grouping: "facility", mode: "solve" }
         }
+    }
+
+    if (migratedProfile.latestVersion === "1.4") {
+        migratedProfile.latestVersion = "1.5";
+        migratedProfile.essenceChecker = {
+            essences: [],
+            minRank: 6,
+            showStatNames: false
+        }
+    }
+
+    if (migratedProfile.latestVersion === "1.5") {
+        migratedProfile.latestVersion = "1.6";
+        migratedProfile.factoryCalculator.settings.view = "table";
     }
 
     // DON'T FORGET TO UPDATE THE DEFAULTS WHEN ADDING NEW THINGS

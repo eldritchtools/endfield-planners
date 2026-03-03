@@ -19,6 +19,8 @@ export default function HomeTab() {
         <br /> <br />
         <LinkComponent href={"/essence-farming-solver"}>Essence Farming Solver</LinkComponent> - Find the best farming spots for essences.
         <br /> <br />
+        <LinkComponent href={"/essence-checker"}>Essence Checker</LinkComponent> - Check if your essences match any weapons you have or may want to pull for.
+        <br /> <br />
         <LinkComponent href={"/factory-calculator"}>Factory Calculator</LinkComponent> - Compute the best products for your factory or just see the facilities needed to produce what you want.
     </div>
 }
