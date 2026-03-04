@@ -247,7 +247,7 @@ export default function EssenceCheckerTab() {
             Check if your essences match a weapon you have or are planning to pull for.
         </p>
 
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
             <button onClick={() => addEssence()}>
                 Add essence
             </button>
