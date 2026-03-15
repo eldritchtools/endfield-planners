@@ -48,6 +48,8 @@ function constructGraph(grouping, recipeGroups, recipes, products) {
     const nodesMapped = {};
     if (grouping === "output") {
         const handleRecipeGroup = ({ id, qty, children }, i) => {
+            if(!id) return;
+
             const data = recipes[id];
             const recipeNode = createRecipeNode(i, id, qty);
             if (recipeNode.id in nodesMapped) {
