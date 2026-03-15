@@ -12,9 +12,10 @@ const regionData = {
         name: "Wuling",
         power: 200,
         income: {
-            "Originium_Ore": 360,
+            "Originium_Ore": 480,
             "Amethyst_Ore": 0,
-            "Ferrium_Ore": 90
+            "Ferrium_Ore": 90,
+            "Cuprium_Ore": 120
         }
     },
 }
