@@ -80,6 +80,7 @@ function processRecipeGroups(factoryData, computedProducts, computedRecipes, rec
         result = Object.entries(products ?? {}).map(([id, qty]) => {
             if (Math.abs(qty) < 1e-4) return null;
             const recipeId = Object.keys(tempRecipes).find(rId => recipeData[rId].outputs.some(y => y.id === id));
+            if(recipeId === undefined) return {};
             const recipeQty = qty * recipeData[recipeId].outputs.find(x => x.id === id).qty * recipeData[recipeId].duration / 60;
 
             return constructTree(recipeId, recipeQty);

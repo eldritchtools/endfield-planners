@@ -519,6 +519,8 @@ export default function FactoryCalculatorTab() {
             {/* <br /> <br />
             For byproducts such as sewage, you may want to apply a negative item value to them to force the solver to send them to water treatment plants. */}
             <br /> <br />
+            WARNING: Handling of byproducts such as sewage is currently broken. This is currently being worked on. Sorry for the inconvenience.
+            <br /> <br />
             Note that the highest score is not always the optimal configuration (e.g. if you'd need to consume an extra battery or a number of other situations). You may want to experiment with Required Outputs until you find the configuration that best works for you.
             <br /> <br />
             In-game screenshots may be temporarily used for the icons of some facilities or items until a better source is found.

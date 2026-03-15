@@ -34,6 +34,7 @@ export default function RecipesTable({ profileData, computedProducts, computedRe
 
         const handleRecipeGroup = (recipeGroup, level, pathId) => {
             const data = recipeData[recipeGroup.id];
+            if(!data) return;
             rows.push(<tr key={`${recipeGroup.id}-${rows.length}`} className="factory-recipes-table-row">
                 <td style={{ padding: "0.5rem" }}>{data.id === "transfer" ? "" : recipeGroup.qty}</td>
                 <td style={{ padding: "0.5rem" }}>
