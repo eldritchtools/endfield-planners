@@ -1,5 +1,5 @@
 function handleSetNumberInput(val, setValue, force, min, max) {
-    const parsed = parseInt(val, 10);
+    const parsed = parseFloat(val, 10);
     if(force) {
         if(isNaN(parsed)) setValue(min);
         else {
