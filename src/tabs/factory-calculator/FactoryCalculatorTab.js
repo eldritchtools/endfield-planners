@@ -516,8 +516,12 @@ export default function FactoryCalculatorTab() {
             The optimizer will find solutions that only partially use some facilities or production lines. Numbers may be slightly off for partial buildings due to rounding errors.
             <br /> <br />
             The optimizer does not account for interchangeable products (e.g. Buck Capsule vs Canned Citrome products). You have to specify them in Required Outputs if you want to see a specific one.
+            {/* <br /> <br />
+            For byproducts such as sewage, you may want to apply a negative item value to them to force the solver to send them to water treatment plants. */}
             <br /> <br />
             Note that the highest score is not always the optimal configuration (e.g. if you'd need to consume an extra battery or a number of other situations). You may want to experiment with Required Outputs until you find the configuration that best works for you.
+            <br /> <br />
+            In-game screenshots may be temporarily used for the icons of some facilities or items until a better source is found.
         </p>
         <ControlsPanel items={factoryItems} facilities={facilities} recipes={recipes}
             profileData={profileData} setProfileData={setProfileData}
