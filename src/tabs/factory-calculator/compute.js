@@ -1,7 +1,7 @@
 import solver from "javascript-lp-solver";
 
 const LIMITS = {
-    Forge_of_the_Sky: 2
+    Forge_of_the_Sky: 4
 }
 
 function compute(recipes, facilities, inputLimits, transfer, targets, scores, optimize = false) {

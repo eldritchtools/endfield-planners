@@ -40,7 +40,7 @@ function processRecipeGroups(factoryData, computedProducts, computedRecipes, rec
             data.inputs?.forEach(({ id: inputId, qty: inputQty }) => {
                 let demand = recipeQty * inputQty / data.duration;
                 while (Math.abs(demand) > 1e-7) {
-                    const inputRecipeId = Object.keys(tempRecipes).find(id => recipeData[id].outputs.some(y => y.id === inputId));
+                    const inputRecipeId = Object.keys(tempRecipes).find(id => recipeData[id].outputs?.some(y => y.id === inputId));
                     if (!inputRecipeId) break;
                     const perRecipe = recipeData[inputRecipeId].outputs.find(x => x.id === inputId).qty / recipeData[inputRecipeId].duration;
                     const inputRecipeQty = Math.min(tempRecipes[inputRecipeId], demand / perRecipe);
@@ -79,7 +79,7 @@ function processRecipeGroups(factoryData, computedProducts, computedRecipes, rec
 
         result = Object.entries(products ?? {}).map(([id, qty]) => {
             if (Math.abs(qty) < 1e-4) return null;
-            const recipeId = Object.keys(tempRecipes).find(rId => recipeData[rId].outputs.some(y => y.id === id));
+            const recipeId = Object.keys(tempRecipes).find(rId => recipeData[rId].outputs?.some(y => y.id === id));
             if(recipeId === undefined) return {};
             const recipeQty = qty * recipeData[recipeId].outputs.find(x => x.id === id).qty * recipeData[recipeId].duration / 60;
 

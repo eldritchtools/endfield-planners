@@ -395,7 +395,7 @@ function ControlsPanel({ items, facilities, recipes, profileData, setProfileData
         </div>
         <span style={{ color: "#aaa", fontSize: "0.8rem", textAlign: "start" }}>
             Settings for the solver. Also displays the total score generated and power consumed. <br />
-            Group by changes how recipes are displayed on the table below. The Output mode can sometimes unnecessarily "break apart" some recipes to multiple rows or miss some numbers particularly for circular recipes like planting. <br />
+            Group by changes how recipes are displayed on the table/chart below. Group by output can easily break or show wrong numbers when handling byproducts, circular recipe chains, or multiple products that rely on the same recipes. Refer to group by facility if this becomes an issue. <br />
             Mode changes whether the solver only computes the required recipes for the specified target outputs or attempts to use all remaining resources to maximize the score.
         </span>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "start", gap: "0.25rem" }}>
@@ -468,7 +468,7 @@ export default function FactoryCalculatorTab() {
         const { feasible, recipeCounts, resultCounts } = compute(recipes, facilities, inputLimits, transfer, targetProducts, scores, optimize);
         if (!feasible) {
             setFeasible(false);
-            return;
+            return [{}, {}];
         }
         setFeasible(true);
 
@@ -516,10 +516,8 @@ export default function FactoryCalculatorTab() {
             The optimizer will find solutions that only partially use some facilities or production lines. Numbers may be slightly off for partial buildings due to rounding errors.
             <br /> <br />
             The optimizer does not account for interchangeable products (e.g. Buck Capsule vs Canned Citrome products). You have to specify them in Required Outputs if you want to see a specific one.
-            {/* <br /> <br />
-            For byproducts such as sewage, you may want to apply a negative item value to them to force the solver to send them to water treatment plants. */}
             <br /> <br />
-            WARNING: Handling of byproducts such as sewage is currently broken. This is currently being worked on. Sorry for the inconvenience.
+            Unused byproducts such as sewage will be shown in computed outputs. You can assign them negative item values to force the solver to put them in water treatment plants.
             <br /> <br />
             Note that the highest score is not always the optimal configuration (e.g. if you'd need to consume an extra battery or a number of other situations). You may want to experiment with Required Outputs until you find the configuration that best works for you.
             <br /> <br />
