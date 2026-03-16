@@ -33,21 +33,41 @@ function compute(recipes, facilities, inputLimits, transfer, targets, scores, op
         variables["transfer"] = { [transfer.item]: 1, transfer: 1 };
     }
 
-    const model = optimize ?
-        {
+    let results;
+    if (optimize) {
+        const model1 = {
             "optimize": "score",
             "opType": "max",
             "variables": variables,
             "constraints": constraints
-        } :
-        {
+        };
+
+        const result1 = solver.Solve(model1);
+        const maxScore = result1.result;
+
+        const constraints2 = {
+            ...constraints,
+            score: { min: maxScore - 1e-6, max: maxScore + 1e-6 }
+        };
+
+        const model2 = {
+            optimize: "power",
+            opType: "min",
+            variables: variables,
+            constraints: constraints2
+        };
+
+        results = solver.Solve(model2);
+    } else {
+        const model = {
             "optimize": "power",
             "opType": "min",
             "variables": variables,
             "constraints": constraints
         }
 
-    const results = solver.Solve(model);
+        results = solver.Solve(model);
+    }
 
     const resultCounts = {};
     const recipeCounts = {};
