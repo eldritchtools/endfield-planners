@@ -15,7 +15,7 @@ const regionData = {
             "Originium_Ore": 480,
             "Amethyst_Ore": 0,
             "Ferrium_Ore": 90,
-            "Cuprium_Ore": 120
+            "Cuprium_Ore": 180
         }
     },
 }
