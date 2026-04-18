@@ -515,7 +515,7 @@ export default function FactoryCalculatorTab() {
             <br /> <br />
             The optimizer will find solutions that only partially use some facilities or production lines. Numbers may be slightly off for partial buildings due to rounding errors.
             <br /> <br />
-            The optimizer does not account for interchangeable products (e.g. Buck Capsule vs Canned Citrome products). You have to specify them in Required Outputs if you want to see a specific one.
+            The optimizer does not account for interchangeable products (e.g. Buck Capsule vs Canned Citrome products). You have to specify them in Required Outputs if you want to see a specific one. It can also only handle one recipe per building, so it cannot optimize power consumption for buildings that can handle multiple recipes at once.
             <br /> <br />
             Unused byproducts such as sewage will be shown in computed outputs. You can assign them negative item values to force the solver to put them in water treatment plants.
             <br /> <br />
