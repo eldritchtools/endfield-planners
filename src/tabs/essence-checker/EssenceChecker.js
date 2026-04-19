@@ -78,7 +78,7 @@ function Essence({ data, setName, setStat, removeEssence, statOptions, minRank, 
 
     const filterFunc = (candidate, input) => {
         if (!input || input.length === 0) return true;
-        return candidate.data.name.toLowerCase().includes(input.toLowerCase());
+        return candidate.data.label.toLowerCase().includes(input.toLowerCase());
     }
 
     const filteredWeapons = useMemo(() => {
