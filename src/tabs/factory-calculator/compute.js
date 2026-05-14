@@ -1,7 +1,8 @@
 import solver from "javascript-lp-solver";
 
 const LIMITS = {
-    Forge_of_the_Sky: 8
+    Forge_of_the_Sky: 12,
+    Purification_Node: 1
 }
 
 function compute(recipes, facilities, inputLimits, transfer, targets, scores, optimize = false) {
