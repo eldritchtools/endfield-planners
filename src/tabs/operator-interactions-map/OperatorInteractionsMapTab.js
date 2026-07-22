@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
-import OperatorSelectorText from '../../components/OperatorSelectorText';
-import { useOperators } from '../../DataProvider';
+import { useOperators, useSkills } from '../../DataProvider';
 import { useProfiles } from '@eldritchtools/shared-components';
 import TriggerSelector from './TriggerSelector';
 import { projectGraph, useInteractionsGraph } from './graph';
@@ -8,25 +7,79 @@ import { GraphView } from './GraphView';
 import SkillTooltip from './SkillTooltip';
 import { ReactFlowProvider } from '@xyflow/react';
 import GraphDetails from './GraphDetails';
+import { OperatorImage } from '../../components/ImageHandler';
+import { selectStyle } from '../../styles';
+import Select from 'react-select';
+
+function OperatorSelector({ value, setValue, options }) {
+    const [operators, operatorsLoading] = useOperators();
+
+    const optionsMapped = useMemo(() =>
+        operatorsLoading ?
+            {} :
+            options.reduce((acc, opt) => {
+                const opId = opt.opId ?? opt.id;
+                const opName = opt.name ?? operators[opId].name;
+
+                acc[opt.id] = {
+                    label: <div style={{ display: "flex", alignItems: "center", gap: "0.2rem" }}>
+                        <OperatorImage id={opId} width={20} height={24} />
+                        {opName}
+                    </div>,
+                    value: opt.id,
+                    name: opName
+                };
+                return acc;
+            }, {}),
+        [options, operators, operatorsLoading]
+    );
+
+    const optionsFinal = useMemo(() =>
+        Object.values(optionsMapped).sort((a, b) => a.value.localeCompare(b.value)), [optionsMapped]
+    );
+
+    const filterFunc = (candidate, input) => {
+        if (!input || input.length === 0) return true;
+        return candidate.data.name.toLowerCase().includes(input.toLowerCase());
+    }
+
+    return <Select
+        isClearable={true}
+        options={optionsFinal}
+        value={value ? optionsMapped[value] : value}
+        onChange={opt => setValue(opt ? opt.value : opt)}
+        filterOption={filterFunc}
+        styles={selectStyle}
+    />
+}
+
 
 function GraphControls({ viewSpec, onChange }) {
-    const [operators, operatorsLoading] = useOperators();
+    const [skills, skillsLoading] = useSkills();
     const { profileData } = useProfiles();
 
     const availableOperators = useMemo(() =>
-        operatorsLoading ? [] :
-            Object.keys(operators).filter(x => x in profileData.operators ? !profileData.operators[x].disabled : true),
-        [operators, operatorsLoading, profileData.operators]
+        skillsLoading ? [] :
+            Object.entries(skills).filter(([id, data]) => {
+                const opId = data.opId ?? id;
+                return opId in profileData.operators ? !profileData.operators[opId].disabled : true
+            }).map(([id, data]) => {
+                const opt = { id: id };
+                if (data.opId) opt.opId = data.opId;
+                if (data.name) opt.name = data.name;
+                return opt;
+            }),
+        [skills, skillsLoading, profileData.operators]
     )
 
-    if (operatorsLoading) return null;
+    if (skillsLoading) return null;
 
     const selector = () => {
         switch (viewSpec.mode) {
             case 'operator':
                 return <div style={{ display: "flex", gap: "0.25rem", alignItems: "center", flexWrap: "wrap" }}>
                     Select an operator to view their interactions:
-                    <OperatorSelectorText
+                    <OperatorSelector
                         value={viewSpec.ids[0]}
                         setValue={v => onChange({ ...viewSpec, ids: [v] })}
                         options={availableOperators} />
@@ -48,7 +101,7 @@ function GraphControls({ viewSpec, onChange }) {
                     <div style={{ display: "flex", gap: "0.25rem", flexWrap: "wrap" }}>
                         {
                             viewSpec.ids.map((id, ind) =>
-                                <OperatorSelectorText
+                                <OperatorSelector
                                     key={ind}
                                     value={id}
                                     setValue={v => onChange({ ...viewSpec, ids: viewSpec.ids.map((x, i) => ind === i ? v : x) })}
@@ -65,13 +118,13 @@ function GraphControls({ viewSpec, onChange }) {
                         <button onClick={() => onChange({ ...viewSpec, ids: [null, null] })}>Clear</button>
                     </div>
                     <div style={{ display: "flex", gap: "0.25rem", alignItems: "center" }}>
-                        <OperatorSelectorText
+                        <OperatorSelector
                             value={viewSpec.ids[0]}
                             setValue={v => onChange({ ...viewSpec, ids: [v, viewSpec.ids[1]] })}
                             options={availableOperators}
                         />
                         ➔
-                        <OperatorSelectorText
+                        <OperatorSelector
                             value={viewSpec.ids[1]}
                             setValue={v => onChange({ ...viewSpec, ids: [viewSpec.ids[0], v] })}
                             options={availableOperators}
@@ -142,7 +195,7 @@ export default function OperatorInteractionsMapTab() {
         {graphLoading ?
             null :
             <ReactFlowProvider>
-                <GraphView graph={subgraph} selectedNode={selectedNode} setSelectedNode={setSelectedNode}/>
+                <GraphView graph={subgraph} selectedNode={selectedNode} setSelectedNode={setSelectedNode} />
             </ReactFlowProvider>
         }
         <GraphDetails graph={subgraph} viewSpec={viewSpec} selectedNode={selectedNode} />
