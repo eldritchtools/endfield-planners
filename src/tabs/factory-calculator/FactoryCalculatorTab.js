@@ -511,6 +511,8 @@ export default function FactoryCalculatorTab() {
     return <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "1rem" }}>
         <h2 style={{ marginBottom: 0 }}>Factory Calculator</h2>
         <p style={{ textAlign: "start", maxWidth: "1000px", lineHeight: "1.3" }}>
+            NOTE: As of 1.4, I will no longer be updating this tool. Sorry for the inconvenience.
+            <br /> <br />
             Maximize the stock bills you produce in your factory or assign custom score values to items to find the best combination of them to produce.
             <br /> <br />
             The optimizer will find solutions that only partially use some facilities or production lines. Numbers may be slightly off for partial buildings due to rounding errors.
