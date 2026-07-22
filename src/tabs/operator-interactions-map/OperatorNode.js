@@ -1,10 +1,13 @@
-import { useOperators } from '../../DataProvider';
+import { useOperators, useSkills } from '../../DataProvider';
 import { OperatorImage } from '../../components/ImageHandler';
 
 export default function OperatorNode({ data }) {
     const [operators, operatorsLoading] = useOperators();
+    const [skills, skillsLoading] = useSkills();
 
-    if (operatorsLoading) return <div />;
+    if (operatorsLoading || skillsLoading) return <div />;
+    const opName = skills[data.id].name ?? operators[data.id].name;
+    const opId = skills[data.id].opId ?? data.id;
 
     const style = {
         padding: "0.25rem",
@@ -17,8 +20,8 @@ export default function OperatorNode({ data }) {
 
     return <div style={style}>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <OperatorImage id={data.id} width={60} height={72} />
-            {operators[data.id].name}
+            <OperatorImage id={opId} width={60} height={72} />
+            {opName}
         </div>
 
         {/* <Handle type="target" position={Position.Left} />

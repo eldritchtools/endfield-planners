@@ -76,9 +76,10 @@ export default function GraphDetails({ graph, viewSpec, selectedNode }) {
 
     const constructSkillCell = (id) => {
         const [opId, type] = id.split("|");
+        const opName = skills[opId].name ?? operators[opId].name;
         return <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.2rem" }}>
             <OperatorImage id={opId} width={20} height={24} />
-            <span>{operators[opId].name}</span> -
+            <span>{opName}</span> -
             <span>{skills[opId][type].name}</span>
             <span style={{ fontStyle: "italic", color: "#aaa", fontSize: "0.75rem" }}>({type.charAt(0).toUpperCase() + type.slice(1)})</span>
         </div>
