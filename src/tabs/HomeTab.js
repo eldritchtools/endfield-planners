@@ -9,6 +9,9 @@ function LinkComponent({ href, children }) {
 
 export default function HomeTab() {
     return <div style={{ marginTop: "2rem", textAlign: "start" }}>
+        Hi! Sorry for the announcement, but if anyone&apos;s still using the planners, I&apos;m going to stop actively updating them. Unfortunately, I&apos;m no longer actively keeping up with the game, so it doesn&apos;t make much sense for me to continue updating them. The tools will remain available, and I can still update some of the data by request, but otherwise they&apos;ll be inactive moving forward. Thanks to everyone who used them!
+        <br /> <br />
+
         Select a tool below or from the sidebar to get started.
         <br /> <br />
         <LinkComponent href={"/dijiang-planner"}>Dijiang Planner</LinkComponent> - Plan out and optimize operator assignments in Dijiang rooms.
